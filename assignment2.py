@@ -45,7 +45,7 @@ def processData(response_data):
         except (ValueError, IndexError):
             print ("Whoops")
                                      
-    #return myresult_dict
+    return myresult_dict
 
 if __name__ == "__main__":
     url = "https://s3.amazonaws.com/cuny-is211-spring2015/birthdays100.csv"
