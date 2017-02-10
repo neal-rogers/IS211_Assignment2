@@ -39,10 +39,13 @@ def processData(response_data):
     response_list = response_data.split("\n")
 
     for rec_line in response_list:
-        rec = rec_line.split(",")
-        myresult_dict[rec[0]] = (rec[1], datetime.datetime.strptime(rec[2], "%d/%m/%Y"))
-
-    return myresult_dict
+        try:
+            rec = rec_line.split(",")
+            myresult_dict[rec[0]] = (rec[1], datetime.datetime.strptime(rec[2], "%d/%m/%Y")
+        except:
+            pass
+                                     
+    #return myresult_dict
 
 if __name__ == "__main__":
     url = "https://s3.amazonaws.com/cuny-is211-spring2015/birthdays100.csv"
