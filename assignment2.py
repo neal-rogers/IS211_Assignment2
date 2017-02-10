@@ -39,11 +39,11 @@ def processData(response_data):
     response_list = response_data.split("\n")
 
     for rec_line in response_list:
+        rec = rec_line.split(",")
         try:
-            rec = rec_line.split(",")
-            myresult_dict[rec[0]] = (rec[1], datetime.datetime.strptime(rec[2], "%d/%m/%Y")
-        except:
-            pass
+            myresult_dict[rec[0]] = (rec[1], datetime.datetime.strptime(rec[2], "%d/%m/%Y"))
+        except (ValueError, IndexError):
+            print ("Whoops")
                                      
     #return myresult_dict
 
