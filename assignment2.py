@@ -43,11 +43,11 @@ def processData(response_data):
     myresult_dict = {}
     response_list = response_data.split("\n")
     f = open(log, 'rt')
-    for rec_line in response_list:
+    for rec_line in response_list[1:-1]:
         rec = rec_line.split(",")
         try:
             myresult_dict[rec[0]] = (rec[1], datetime.datetime.strptime(rec[2], "%d/%m/%Y"))
-        except (ValueError, IndexError):
+        except (ValueError):
             msg = 'Error processing line {} for ID {}'.format(rec_line[0], rec[0])
             logger1.error(msg)
             pass
@@ -67,12 +67,13 @@ def displayPerson(id, personData):
         print 'No user found with that id'
 
 if __name__ == '__main__':
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument('url')
-    # args = parser.parse_args()
-    # print args.echo
-
-    url = 'https://s3.amazonaws.com/cuny-is211-spring2015/birthdays100.csv'
-    csvdata = downloadData(url)
-    result = processData(csvdata)
-    records = displayPerson('3', result)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('url', help='Enter the data url')
+    args = parser.parse_args()
+    if args.url:
+        #url = 'https://s3.amazonaws.com/cuny-is211-spring2015/birthdays100.csv'
+        csvdata = downloadData(url)
+        result = processData(csvdata)
+        records = displayPerson('3', result)
+    else:
+        print 'error'
