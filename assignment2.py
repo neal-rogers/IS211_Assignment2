@@ -4,7 +4,12 @@
 a file, and prints corresponding data for ID numbers.
 """
 
-import urllib2, csv, datetime, logging
+import urllib2, csv, datetime, logging, argparse
+
+
+log = 'error.log'
+logging.basicConfig(filename=log, level=logging.ERROR)
+logger1 = logging.getLogger('IS211_Assignment2')
 
 
 def downloadData(url):
@@ -37,21 +42,37 @@ def processData(response_data):
     """
     myresult_dict = {}
     response_list = response_data.split("\n")
-
+    f = open(log, 'rt')
     for rec_line in response_list:
         rec = rec_line.split(",")
         try:
             myresult_dict[rec[0]] = (rec[1], datetime.datetime.strptime(rec[2], "%d/%m/%Y"))
         except (ValueError, IndexError):
-            print ("Whoops")
+            msg = 'Error processing line {} for ID {}'.format(rec_line[0], rec[0])
+            logger1.error(msg)
+            pass
+        else:
+            pass
                                      
     return myresult_dict
 
-if __name__ == "__main__":
-    url = "https://s3.amazonaws.com/cuny-is211-spring2015/birthdays100.csv"
+def displayPerson(id, personData):
+    try:
+        pid = 'Person #{} '.format(id)
+        name = 'is {} '.format(personData[id][0])
+        bday = 'with a birthday of {}'.format(personData[id][1])
+        record = pid + name + bday
+        print record
+    except:
+        print 'No user found with that id'
 
-    birthdays_csv = downloadData(url)
+if __name__ == '__main__':
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument('url')
+    # args = parser.parse_args()
+    # print args.echo
 
-    results = processData(birthdays_csv)
-
-    print results
+    url = 'https://s3.amazonaws.com/cuny-is211-spring2015/birthdays100.csv'
+    csvdata = downloadData(url)
+    result = processData(csvdata)
+    records = displayPerson('3', result)
