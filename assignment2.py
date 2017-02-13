@@ -6,10 +6,10 @@ a file, and prints corresponding data for ID numbers.
 
 import urllib2, csv, datetime, logging, argparse
 
-
 log = 'error.log'
 logging.basicConfig(filename=log, level=logging.ERROR)
 logger1 = logging.getLogger('IS211_Assignment2')
+
 
 def downloadData(url):
     """
@@ -17,48 +17,59 @@ def downloadData(url):
         url (str): URL for fetching of data.
 
     Returns:
-        data (str): Contents of string.
+        data (str): Contents of string from URL response data.
 
     Example:
         >>> downloadData(url)
         >>>
     """
+    # Generates HTTP request for the passed 'url'; returns/stores HTTP response.
     response = urllib2.urlopen(url)
+    # Sets 'data' to the contents of 'response'.
     data = response.read()
     return data
+
 
 def processData(response_data):
     """
     Args:
-        url (str): URL for fetching of data.
+        response_data (str): Contents of data from downloadData function.
 
     Returns:
-        Dictionary containing .
+        myresult_dict (dict): Dictionary file containing formatted records.
 
     Example:
-        >>> processData()
+        >>> processData(csvdata)
         >>>
     """
+    # Creates dict 'myresult_dict'.
     myresult_dict = {}
+    # Splits the string on each '\n' delimiter and stores each in 'response_list'.
     response_list = response_data.split("\n")
+    # Open the 'log' file in read/write mode.
     f = open(log, 'rt')
+    # For each line in 'response_list' within specified range...
     for rec_line in response_list[1:-1]:
+        # Split each line on ',' delimiter
         rec = rec_line.split(",")
         try:
+            # Add formatted and indexed values from 'rec' into the dictionary.
             myresult_dict[rec[0]] = (rec[1], datetime.datetime.strptime(rec[2], "%d/%m/%Y"))
         except (ValueError):
+            # Write formatted error message to log file.
             msg = 'Error processing line {} for ID {}'.format(rec_line[0], rec[0])
             logger1.error(msg)
             pass
         else:
             pass
-                                     
+
     return myresult_dict
+
 
 def displayPerson(id, personData):
     """
     Args:
-        id ():
+        id (str):
         personData ():
 
     Returns:
@@ -77,6 +88,7 @@ def displayPerson(id, personData):
         print record
     except:
         print 'No user found with that id'
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
