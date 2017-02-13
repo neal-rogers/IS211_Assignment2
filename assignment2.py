@@ -11,14 +11,13 @@ log = 'error.log'
 logging.basicConfig(filename=log, level=logging.ERROR)
 logger1 = logging.getLogger('IS211_Assignment2')
 
-
 def downloadData(url):
     """
     Args:
         url (str): URL for fetching of data.
 
     Returns:
-        data (): Contents of string.
+        data (str): Contents of string.
 
     Example:
         >>> downloadData(url)
@@ -34,10 +33,10 @@ def processData(response_data):
         url (str): URL for fetching of data.
 
     Returns:
-        Contents of file.
+        Dictionary containing .
 
     Example:
-        >>> downloadData(url)
+        >>> processData()
         >>>
     """
     myresult_dict = {}
@@ -57,6 +56,18 @@ def processData(response_data):
     return myresult_dict
 
 def displayPerson(id, personData):
+    """
+    Args:
+        id ():
+        personData ():
+
+    Returns:
+        data (str): Contents of string.
+
+    Example:
+        >>> displayPerson(10, )
+        >>>
+    """
     try:
         pid = 'Person #{} '.format(id)
         name = 'is {} '.format(personData[id][0])
@@ -71,9 +82,9 @@ if __name__ == '__main__':
     parser.add_argument('url', help='Enter the data url')
     args = parser.parse_args()
     if args.url:
-        #url = 'https://s3.amazonaws.com/cuny-is211-spring2015/birthdays100.csv'
+        url = 'https://s3.amazonaws.com/cuny-is211-spring2015/birthdays100.csv'
         csvdata = downloadData(url)
         result = processData(csvdata)
-        records = displayPerson('3', result)
+        records = displayPerson('10', result)
     else:
         print 'error'
