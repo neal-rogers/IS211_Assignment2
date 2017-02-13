@@ -20,8 +20,8 @@ def downloadData(url):
         data (str): Contents of string from URL response data.
 
     Example:
-        >>> downloadData(url)
-        >>>
+        >> downloadData(url)
+        >>
     """
     # Generates HTTP request for the passed 'url'; returns/stores HTTP response.
     response = urllib2.urlopen(url)
@@ -39,8 +39,8 @@ def processData(response_data):
         myresult_dict (dict): Dictionary file containing formatted records.
 
     Example:
-        >>> processData(csvdata)
-        >>>
+        >> processData(csvdata)
+        >>
     """
     # Creates dict 'myresult_dict'.
     myresult_dict = {}
@@ -58,6 +58,7 @@ def processData(response_data):
         except (ValueError):
             # Write formatted error message to log file.
             msg = 'Error processing line {} for ID {}'.format(rec_line[0], rec[0])
+            # Use custome logger and write the formatted custom error message.
             logger1.error(msg)
             pass
         else:
@@ -70,24 +71,30 @@ def displayPerson(id, personData):
     """
     Args:
         id (str):
-        personData ():
+        personData (dict): Dictionary containing user data.
 
     Returns:
-        record (str):
+        record (str): Formatted and concatenated record values.
 
     Example:
-        >>> displayPerson(10, result)
-        >>> Person #10 is Una James with a birthday of 1981-09-05 00:00:00
+        >> displayPerson(10, result)
+        >> Person #10 is Una James with a birthday of 1981-09-05 00:00:00
     """
-    id = raw_input('Enter user id: ')
-    try:
-        pid = 'Person #{} '.format(id)
-        name = 'is {} '.format(personData[id][0])
-        bday = 'with a birthday of {}'.format(personData[id][1])
-        record = pid + name + bday
-        print record
-    except:
-        print 'No user found with that id'
+    # Prompt user for id number and store it.
+    while id > 0:
+        try:
+            id = raw_input('Enter user id: ')
+            pid = 'Person #{} '.format(id)
+            name = 'is {} '.format(personData[id][0])
+            bday = 'with a birthday of {}'.format(personData[id][1])
+            record = pid + name + bday
+            print record
+        except:
+            print 'No user found with that id'
+            continue
+        if id <= 0:
+            print "Exiting program..."
+            break
 
 
 if __name__ == '__main__':
