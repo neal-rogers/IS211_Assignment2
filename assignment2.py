@@ -96,8 +96,7 @@ def displayPerson(id, personData):
             print "Exiting program..."
             break
 
-
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('url', help='Enter the data url')
     args = parser.parse_args()
@@ -108,3 +107,5 @@ if __name__ == '__main__':
         records = displayPerson(id, result)
     else:
         print 'error'
+if __name__ == '__main__':
+    main()
