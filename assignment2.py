@@ -62,12 +62,13 @@ def displayPerson(id, personData):
         personData ():
 
     Returns:
-        data (str): Contents of string.
+        record (str):
 
     Example:
-        >>> displayPerson(10, )
-        >>>
+        >>> displayPerson(10, result)
+        >>> Person #10 is Una James with a birthday of 1981-09-05 00:00:00
     """
+    id = raw_input('Enter user id: ')
     try:
         pid = 'Person #{} '.format(id)
         name = 'is {} '.format(personData[id][0])
@@ -85,6 +86,6 @@ if __name__ == '__main__':
         url = 'https://s3.amazonaws.com/cuny-is211-spring2015/birthdays100.csv'
         csvdata = downloadData(url)
         result = processData(csvdata)
-        records = displayPerson('10', result)
+        records = displayPerson(id, result)
     else:
         print 'error'
