@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """This program retrieves a CSV from a URL, processes it, logs invalid lines to
-a file, and prints corresponding data for ID numbers.
+a file, and prints corresponding data for valid ID numbers.
 """
 
 import urllib2, csv, datetime, logging, argparse
@@ -15,10 +15,8 @@ def downloadData(url):
     """
     Args:
         url (str): URL for fetching of data.
-
     Returns:
         data (str): Contents of string from URL response data.
-
     Example:
         >> downloadData(url)
         >>
@@ -34,10 +32,8 @@ def processData(response_data):
     """
     Args:
         response_data (str): Contents of data from downloadData function.
-
     Returns:
         myresult_dict (dict): Dictionary file containing formatted records.
-
     Example:
         >> processData(csvdata)
         >>
@@ -72,10 +68,8 @@ def displayPerson(id, personData):
     Args:
         id (str):
         personData (dict): Dictionary containing user data.
-
     Returns:
         record (str): Formatted and concatenated record values.
-
     Example:
         >> displayPerson(10, result)
         >> Person #10 is Una James with a birthday of 1981-09-05 00:00:00
