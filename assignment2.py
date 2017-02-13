@@ -107,5 +107,6 @@ def main():
         records = displayPerson(id, result)
     else:
         print 'error'
+
 if __name__ == '__main__':
     main()
